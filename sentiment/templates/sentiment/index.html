@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    {% load static %}
+    <title>Covid Sentiment</title>
+    <script src="https://rawgit.com/moment/moment/2.2.1/min/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.3.0/Chart.min.js"></script>
+    
+    <link rel="stylesheet" href="{% static 'tracker/style.css' %}">
+  </head>
+  <body>
+    <div class="wrapper">
+      <h1>Daily Covid Sentiment</h1>
+      <h2>A daily score based on an analysis of 2000 tweets giving a sentiment score between -1 and 1.</h2>
+
+      <canvas id="myChart" width="1600" height="900"></canvas>
+    </div>
+    <script >
+     
+      var dates = {{dates|safe}};
+      var sentiment = {{scores|safe}};
+
+      var config = {
+        type: 'line',
+        data: {
+          labels: dates ,
+          datasets: [
+            { 
+              data: sentiment,
+              label: "Sentiment",
+              borderColor: "#3e95cd",
+              fill: false
+            },
+          ]
+        },
+        options:{
+            scales: {
+                yAxes : [{
+                    ticks : {
+                        max : 1,    
+                        min : -1
+                    }
+                }]
+            }
+        }
+        
+
+      };
+      window.onload = function() {
+        var ctx = document.getElementById("myChart");
+        window.myPie = new Chart(ctx, config);
+    };
+    </script>
+  </body>
+</html>
