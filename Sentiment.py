@@ -6,6 +6,7 @@ from datetime import datetime
 from threading import Timer
 import os
 import django
+from decouple import config
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'tracker.settings')
 django.setup()
@@ -18,10 +19,10 @@ y = x.replace(day=x.day+1, hour=14, minute=0, second=0, microsecond=0)
 delta_t = y-x
 secs = delta_t.seconds+1
 
-consumer_key = 'IXUhw2wnVqkcdbBTH0EAXNFib'
-consumer_secret = '9qKsjBuOEfCzYFAh2FZn547IfQF8uz6vsqgckyaZcPYpCh6JWS'
-access_token = '1209000765773295616-zJNYvN4MrQqsvMjMXOHXDDrMazAH6T'
-access_token_secret = '0NqekKBM37Ol5cxuNdRF8apfAShUjf7q08PJ4PlrRyfp2'
+consumer_key = config('consumer_key')
+consumer_secret = config('consumer_secret')
+access_token = config('access_token')
+access_token_secret = config('access_token_secret')
 
 hashtag_phrase = "Covid"
 
