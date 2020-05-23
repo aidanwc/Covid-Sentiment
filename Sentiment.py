@@ -48,11 +48,7 @@ def sentiment_script():
                 d = {'Tweet':[text], 'Username':[screen_name], 'Polarity':[polarity]}
                 df = pd.DataFrame(data=d)
                 
-                try:
-                    row=Tweet(username=screen_name,text=text,polarity=polarity)
-                    row.save()
-                except Exception:
-                    print('Error Saving Tweet')
+              
                 
                 final = final.append(df)
 
