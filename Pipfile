@@ -17,4 +17,4 @@ python-decouple = "*"
 dj-database-url = "*"
 
 [requires]
-python_version = "3.8"
+python_version = "3.8.3"
