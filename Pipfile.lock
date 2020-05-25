@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "519a25ae23a8a5a5bdfee86e52fcfa18720efbb2aa382166059cdf36400aceca"
+            "sha256": "1724a7f2c94331a98aad79be93a317d44d6d6961152fd677d1c1221db9acdb21"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -324,6 +324,14 @@
             ],
             "version": "==1.25.9"
         },
+        "vadersentiment": {
+            "hashes": [
+                "sha256:3bf1d243b98b1afad575b9f22bc2cb1e212b94ff89ca74f8a23a588d024ea311",
+                "sha256:5d7c06e027fc8b99238edb0d53d970cf97066ef97654009890b83703849632f9"
+            ],
+            "index": "pypi",
+            "version": "==3.3.2"
+        },
         "vine": {
             "hashes": [
                 "sha256:133ee6d7a9016f177ddeaf191c1f58421a1dcc6ee9a42c58b34bed40e1d2cd87",
@@ -341,4 +349,4 @@
         }
     },
     "develop": {}
-} 
+}

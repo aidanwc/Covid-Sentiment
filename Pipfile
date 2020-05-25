@@ -17,6 +17,7 @@ python-decouple = "*"
 dj-database-url = "*"
 psycopg2 = "*"
 whitenoise = "*"
+vadersentiment = "*"
 
 [requires]
-python_version = "3.8.3" 
+python_version = "3.8.3"
