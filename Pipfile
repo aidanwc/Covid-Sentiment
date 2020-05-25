@@ -17,6 +17,10 @@ python-decouple = "*"
 dj-database-url = "*"
 psycopg2 = "*"
 whitenoise = "*"
+decouple = "*"
+django-decouple = "*"
+vadersentiment = "*"
+vader-sentiment = "*"
 
 [requires]
-python_version = "3.8.3" 
+python_version = "3.8.3"
