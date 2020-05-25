@@ -40,8 +40,6 @@ def sentiment_script():
                 text = ' '.join(re.sub("(@[A-Za-z0-9]+)|([^0-9A-Za-z \t])|(\w+:\/\/\S+)", " ", text).split())
 
                 textVader = analyzer.polarity_scores(text)
-                blob = TextBlob(text)
-                polarity=blob.sentiment.polarity
 
                 if (-0.05 < textVader['compound'] < 0.05):
                         polarityScore = "Neutral"
@@ -50,22 +48,22 @@ def sentiment_script():
                 elif (textVader['compound'] <= -0.05):
                         polarityScore = "Negative"
                 
-                d = {'Tweet':[text], 'Username':[screen_name], 'Polarity':[textVader['compound']],'Sentiment':[polarityScore]}
-                #t = {'Textblob':[polarity],'Vader':[textVader['compound']],'SentimentsBlob':[polarityScore], 'SentimentsVader':[polarityScoreVader]}
+                d = {'Tweet':[text], 'Username':[screen_name], 'Polarity':[textVader['compound']], 'Sentiment':[polarityScore]}
                 df = pd.DataFrame(data=d)
 
                 final = final.append(df)
 
-        mean = final.mean()
+        mean = round(final.mean(),3)
 
         print(final)
         print(mean)
 
-
         numberPositive = str(final.Sentiment.str.count("Positive").sum())
         numberNegative = str(final.Sentiment.str.count("Negative").sum())
         numberNeutral = str(final.Sentiment.str.count("Neutral").sum())
+
         print("")
+
         print("Number of positive tweets: " + numberPositive)
         print("Number of negative tweets: " + numberNegative)
         print("Number of neutral tweets: " + numberNeutral)
