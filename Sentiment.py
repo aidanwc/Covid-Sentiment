@@ -43,22 +43,14 @@ def sentiment_script():
                 blob = TextBlob(text)
                 polarity=blob.sentiment.polarity
 
-
-                if(polarity == 0):
-                        polarityScore = "Neutral"
-                elif(polarity > 0):
-                        polarityScore = "Positive"
-                elif(polarity < 0):
-                        polarityScore = "Negative"
-
                 if (-0.05 < textVader['compound'] < 0.05):
-                        polarityScoreVader = "Neutral"
+                        polarityScore = "Neutral"
                 elif (textVader['compound'] >= 0.05):
-                        polarityScoreVader = "Positive"
+                        polarityScore = "Positive"
                 elif (textVader['compound'] <= -0.05):
-                        polarityScoreVader = "Negative"
+                        polarityScore = "Negative"
                 
-                d = {'Tweet':[text], 'Username':[screen_name], 'Polarity':[textVader['compound']],'Sentiments':[polarityScore]}
+                d = {'Tweet':[text], 'Username':[screen_name], 'Polarity':[textVader['compound']],'Sentiment':[polarityScore]}
                 #t = {'Textblob':[polarity],'Vader':[textVader['compound']],'SentimentsBlob':[polarityScore], 'SentimentsVader':[polarityScoreVader]}
                 df = pd.DataFrame(data=d)
 
@@ -70,13 +62,13 @@ def sentiment_script():
         print(mean)
 
 
-        numberPositiveV = str(final.Sentiments.str.count("Positive").sum())
-        numberNegativeV = str(final.Sentiments.str.count("Negative").sum())
-        numberNeutralV = str(final.Sentiments.str.count("Neutral").sum())
+        numberPositive = str(final.Sentiment.str.count("Positive").sum())
+        numberNegative = str(final.Sentiment.str.count("Negative").sum())
+        numberNeutral = str(final.Sentiment.str.count("Neutral").sum())
         print("")
-        print("Number of positive tweets: " + numberPositiveV)
-        print("Number of negative tweets: " + numberNegativeV)
-        print("Number of neutral tweets: " + numberNeutralV)
+        print("Number of positive tweets: " + numberPositive)
+        print("Number of negative tweets: " + numberNegative)
+        print("Number of neutral tweets: " + numberNeutral)
         
         todays_score = DailyScore(score=mean)
         todays_score.save()
