@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "6759bb2cc0bc0944911007c7fb94bd73baa459a023b9e105cc033af2fb6b4358"
+            "sha256": "519a25ae23a8a5a5bdfee86e52fcfa18720efbb2aa382166059cdf36400aceca"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -66,13 +66,6 @@
             ],
             "version": "==7.1.2"
         },
-        "decouple": {
-            "hashes": [
-                "sha256:c253c1cc62b76e9720a066f334552548c6de1884bc3bdf456ddb62d61b867b09"
-            ],
-            "index": "pypi",
-            "version": "==0.0.7"
-        },
         "dj-database-url": {
             "hashes": [
                 "sha256:4aeaeb1f573c74835b0686a2b46b85990571159ffc21aa57ecd4d1e1cb334163",
@@ -95,13 +88,6 @@
             ],
             "index": "pypi",
             "version": "==1.1.1"
-        },
-        "django-decouple": {
-            "hashes": [
-                "sha256:a7f4b4d1eaedde3a7d1a8e0489dae4afa96cff3eb575d569d92d9ba5f4283f90"
-            ],
-            "index": "pypi",
-            "version": "==2.1"
         },
         "django-kronos": {
             "hashes": [
@@ -338,22 +324,6 @@
             ],
             "version": "==1.25.9"
         },
-        "vader-sentiment": {
-            "hashes": [
-                "sha256:2c127cd4bd3caa134121bfdfee2cc90477e5278435742613028a53e9d6be5be6",
-                "sha256:a155288a6c3a877bdcfba80ec99a1a4094c4b21d8c17a071f14122482b75dced"
-            ],
-            "index": "pypi",
-            "version": "==3.2.1.1"
-        },
-        "vadersentiment": {
-            "hashes": [
-                "sha256:3bf1d243b98b1afad575b9f22bc2cb1e212b94ff89ca74f8a23a588d024ea311",
-                "sha256:5d7c06e027fc8b99238edb0d53d970cf97066ef97654009890b83703849632f9"
-            ],
-            "index": "pypi",
-            "version": "==3.3.2"
-        },
         "vine": {
             "hashes": [
                 "sha256:133ee6d7a9016f177ddeaf191c1f58421a1dcc6ee9a42c58b34bed40e1d2cd87",
@@ -371,4 +341,4 @@
         }
     },
     "develop": {}
-}
+} 
