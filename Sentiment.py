@@ -8,6 +8,7 @@ import os
 import django
 from decouple import config
 from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
+import datetime
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'tracker.settings')
 django.setup()
@@ -68,8 +69,11 @@ def sentiment_script():
         print("Number of negative tweets: " + numberNegative)
         print("Number of neutral tweets: " + numberNeutral)
         
-        todays_score = DailyScore(score=mean)
-        todays_score.save()
+        #todays_score = DailyScore(score=mean)
+        #todays_score.save()
 
 #Running the script
-sentiment_script()
+
+now = datetime.datetime.now()
+
+if(now.hour == 23):
