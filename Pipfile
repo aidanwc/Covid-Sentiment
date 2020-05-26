@@ -18,6 +18,7 @@ dj-database-url = "*"
 psycopg2 = "*"
 whitenoise = "*"
 vadersentiment = "*"
+datetime = "*"
 
 [requires]
 python_version = "3.8.3"

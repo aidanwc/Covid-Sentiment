@@ -6,6 +6,10 @@ class DailyScore(models.Model):
     dateTime=models.DateTimeField(auto_now=True)
     score = models.FloatField()
     
+    positiveCount= models.IntegerField(default=0)
+    negativeCount=models.IntegerField(default=0)
+    neutralCount=models.IntegerField(default=0)
+    
     def __str__(self):
         return 'Date: ' + str(self.date) + ' Score: ' +str(self.score)
     
@@ -17,6 +21,18 @@ class Tweet(models.Model):
     
     def __str__(self):
         return 'Username: ' + self.username
+
+class HourlyScore(models.Model):
+    date=models.DateField(auto_now=True)
+    dateTime=models.DateTimeField(auto_now=True)
+    score = models.FloatField()
+    
+    positiveCount= models.IntegerField(default=0)
+    negativeCount=models.IntegerField(default=0)
+    neutralCount=models.IntegerField(default=0)
+    
+    def __str__(self):
+        return 'DateTime: ' + str(self.dateTime) + ' Score: ' +str(self.score)
     
     
     
