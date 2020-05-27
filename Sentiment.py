@@ -68,7 +68,8 @@ def sentiment_script():
 
         print("Number of positive tweets: " + numberPositive)
         print("Number of negative tweets: " + numberNegative)
-        print("Number of neutral tweets: \n" + numberNeutral)
+        print("Number of neutral tweets: " + numberNeutral)
+        print()
         
         hourly_score = HourlyScore(score=hourly_mean, positiveCount=numberPositive, negativeCount=numberNegative, neutralCount=numberNeutral)
         hourly_score.save()
@@ -94,7 +95,7 @@ def sentiment_script():
                         posSum+=score.positiveCount
                         negSum+=score.negativeCount
                         neutSum+=score.neutralCount
-                samplemean= scoreSum/min(1,counter)
+                samplemean= scoreSum/max(1,counter)
                 samplemean=round(samplemean,3)
                 print("Number of hourly scores:{} SumScores:{} Sample Mean:{} \n positiveTweets:{} negativeTweets:{} neutral tweets: {}".
                       format(counter,scoreSum,samplemean,posSum,negSum,neutSum))
