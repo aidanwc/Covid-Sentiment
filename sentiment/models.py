@@ -2,7 +2,7 @@ from django.db import models
 
 # Create your models here.
 class DailyScore(models.Model):
-    date=models.DateField(auto_now=True)
+    date=models.DateField()
     dateTime=models.DateTimeField(auto_now=True)
     score = models.FloatField()
     
@@ -23,7 +23,7 @@ class Tweet(models.Model):
         return 'Username: ' + self.username
 
 class HourlyScore(models.Model):
-    date=models.DateField(auto_now=True)
+    date=models.DateField()
     dateTime=models.DateTimeField(auto_now=True)
     score = models.FloatField()
     
