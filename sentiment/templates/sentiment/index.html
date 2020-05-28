@@ -13,14 +13,20 @@
       <h1>Daily Covid Sentiment</h1>
       <h2>A daily score based on an analysis of 2000 tweets giving a sentiment score between -1 and 1.</h2>
 
-      <canvas id="myChart" width="1600" height="900"></canvas>
+      <canvas id="lineChart" width="1600" height="900"></canvas>
+      <h1>Distribution of 48,000 Daily Tweets </h1>
+      <canvas id="stackedBar" width="1600" height="900"></canvas>
     </div>
     <script >
      
       var dates = {{dates|safe}};
       var sentiment = {{scores|safe}};
+      
+      var positive = {{positive|safe}};
+      var negative = {{negative|safe}};
+      var neutral = {{neutral|safe}};
 
-      var config = {
+      var configLine = {
         type: 'line',
         data: {
           labels: dates ,
@@ -46,9 +52,50 @@
         
 
       };
+      
+      var configBar = {
+        type: "bar",
+        data: {
+          labels: dates,
+          datasets: [
+            {
+                label: "Positive",
+                backgroundColor: "#53bd57",
+                fillColor: "#000000",
+                data: positive
+            }, 
+            {
+                label: "Negative",
+                backgroundColor: "#c46060",
+                data: negative
+            },
+            {   
+                label: "Neutral",
+                backgroundColor:"#b1bee3",
+                data: neutral
+            },
+          ]
+        },
+        options: {
+          legend: {
+           
+          },
+          scales: {
+            xAxes:[{
+              stacked: true
+            }],
+            yAxes:[{
+              stacked: true
+            }],
+          }
+        }
+      };
+
       window.onload = function() {
-        var ctx = document.getElementById("myChart");
-        window.myPie = new Chart(ctx, config);
+        var lineChart= document.getElementById("lineChart");
+        var barChart =document.getElementById("stackedBar")
+        window.myLine = new Chart(lineChart, configLine);
+        window.mybar = new Chart(barChart, configBar);
     };
     </script>
   </body>
