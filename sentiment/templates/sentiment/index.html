@@ -1,102 +1,322 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    {% load static %}
-    <title>Covid Sentiment</title>
-    <script src="https://rawgit.com/moment/moment/2.2.1/min/moment.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.3.0/Chart.min.js"></script>
-    
-    <link rel="stylesheet" href="{% static 'tracker/style.css' %}">
-  </head>
-  <body>
-    <div class="wrapper">
-      <h1>Daily Covid Sentiment</h1>
-      <h2>A daily score based on an analysis of 2000 tweets giving a sentiment score between -1 and 1.</h2>
+<html lang="en">
+<head>
+  {% load static %}
+<title>Covid Sentiment Tracker</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins">
+<style>
+body,h1,h2,h3,h4,h5 {font-family: "Poppins", sans-serif}
+body {font-size:16px;}
+.w3-half img{margin-bottom:-6px;margin-top:16px;opacity:0.8;cursor:pointer}
+.w3-half img:hover{opacity:1}
+.w3-hover-white:hover{color:#172e69!important;background-color:#fff!important}
+.w3-blue,.w3-hover-blue:hover{color:#fff!important;background-color: #172e69!important}
+.w3-text-blue,.w3-hover-text-blue:hover{color:#172e69!important}
+p{color: rgb(48, 48, 48);}
+li{color: rgb(48, 48, 48);}
 
-      <canvas id="lineChart" width="1600" height="900"></canvas>
-      <h1>Distribution of 48,000 Daily Tweets </h1>
-      <canvas id="stackedBar" width="1600" height="900"></canvas>
+</style>
+</head>
+<body>
+
+<!-- Sidebar/menu -->
+<nav class="w3-sidebar w3-blue w3-collapse w3-top w3-large w3-padding" style="z-index:3;width:300px;font-weight:bold;" id="mySidebar"><br>
+  <a href="javascript:void(0)" onclick="w3_close()" class="w3-button w3-hide-large w3-display-topleft" style="width:100%;font-size:22px">Close Menu</a>
+  <div class="w3-container">
+    <h3 class="w3-padding-64"><b>Covid<br>Sentiment<br>Tracker</b></h3>
+  </div>
+  <div class="w3-bar-block">
+    <a href="#tracker" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Tracker<font color="#f8c91c" size="5" style="font-family:Montserrat">.</font></a> 
+    <a href="#about" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">About This Project<font color="#f8c91c" size="5" style="font-family:Montserrat">.</font></a> 
+    <a href="#aboutUs" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">About Us<font color="#f8c91c" size="5" style="font-family:Montserrat">.</font></a> 
+    <a href="#contact" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Contact<font color="#f8c91c" size="5" style="font-family:Montserrat">.</font></a>
+  </div>
+</nav>
+
+<!-- Top menu on small screens -->
+<header class="w3-container w3-top w3-hide-large w3-blue w3-xlarge w3-padding>
+  <a href="javascript:void(0)" class="w3-button w3-blue w3-margin-right" onclick="w3_open()">☰</a>
+  <span>Covid Sentiment Tracker</span>
+</header>
+
+<!-- Overlay effect when opening sidebar on small screens -->
+<div class="w3-overlay w3-hide-large" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
+
+<!-- !PAGE CONTENT! -->
+<div class="w3-main" style="margin-left:340px;margin-right:40px">
+
+  <!-- Header -->
+  <div class="w3-container" style="margin-top:80px" id="tracker">
+    <h1 class="w3-xxxlarge w3-text-blue"><b>Tracker</b></h1>
+    <hr style="width:50px;border:5px solid #f8c91c" class="w3-round">
+  </div>
+  
+  <!-- Photo grid (modal) -->
+  <div class="w3-row-padding">
+    <div>
+      <h2 style="color: #172e69;  ">Daily Sentiment Score</h2>
+      <h4>A daily sentiment score based on an analysis of 48,000 tweets</h4>
+      <canvas id="lineChart"style="width:100%"></canvas>
+      <br><br><br>
+      <h2 style="color: #172e69; ">Breakdown of Tweets</h2>
+      <h4>A breakdown of the tweets that the daily sentiment score is based on</h4>
+      <canvas id="stackedBar"  style="width:100%" ></canvas>
     </div>
-    <script >
+  </div>
+  
+
+  <!-- Modal for full size images on click-->
+  <div id="modal01" class="w3-modal w3-black" style="padding-top:0" onclick="this.style.display='none'">
+    <span class="w3-button w3-black w3-xxlarge w3-display-topright">×</span>
+    <div class="w3-modal-content w3-animate-zoom w3-center w3-transparent w3-padding-64">
+      <img id="img01" class="w3-image">
+      <p id="caption"></p>
+    </div>
+  </div>
+
+  <!-- Services -->
+  <div class="w3-container" id="about" style="margin-top:75px">
+    <h1 class="w3-xxxlarge w3-text-blue"><b>About This Project</b></h1>
+    
+    <h3 style="background-image: linear-gradient(0deg,rgba(248, 201, 29, 0.781),rgb(255, 255, 255) 45%,rgba(248, 247, 247, 0.014) 0); display: inline;">Why We Made This</h3>
+    <p>Hi there,</p>
+    <p>
+        Our names are Julian and Aidan. Like many others in the past few months, we had many questions about COVID-19 and some free time to try and answer them. More specifically, 
+        we wanted to analyze tweets related to COVID-19 to unlock some insights into how humans behave during a situation as unusual and irregular as a pandemic.
+    </p>
+    <p>
+        So, we built Covidsentiment.ca to do just that.
+    </p>
+
+    <h3 style="background-image: linear-gradient(0deg,rgba(248, 201, 29, 0.781),rgb(255, 255, 255) 45%,rgba(248, 247, 247, 0.014) 0); display: inline;">How It Works</h3>
+    <p> Our program uses Twitter data to try and estimate how people are feeling about the virus.</p>
+    <p>  
+      To do so, 
+      we gather nearly 50,000 tweets per day that mention COVID-19 and use sentiment analysis — which is a subfield of natural language processing, 
+      or ‘NLP’ — to determine to which degree each tweet is positive, negative, or neutral. The result is a score that ranges from -1.0 (negative) to 1.0 (positive),
+      which we calculate by averaging all of the sentiments from the tweets we scraped on a given day. Then, we take that number and plot it on a time series graph to
+      see how the average sentiment is changing over time.
+    </p> 
+    <p> 
+      In simpler terms, we use a program that gathers thousands of tweets every day, analyzes each tweet to determine its mood,
+      and then tracks how the average mood score of all the tweets we collect changes over time.
+    </p>
+
+    <h3 style="background-image: linear-gradient(0deg,rgba(248, 201, 29, 0.781),rgb(255, 255, 255) 45%,rgba(248, 247, 247, 0.014) 0); display: inline;">Research Objectives</h3>
+    <ol>
+        <li>What insights can we learn about the state of the pandemic by estimating what people’s moods are?</li>
+        <li>How will the average mood towards COVID-19 change over time? What are the implications of that change?</li>
+        <li>What important information can we learn from analyzing extremely negative tweets? What about extremely positive tweets?</li>
+        <li>Are mood improvements permanent? Are they cyclical?</li>
+        <li>What can we predict in the real-world from aggregate mood changes?</li>
+    </ol>
+
+    <h3 style="background-image: linear-gradient(0deg,rgba(248, 201, 29, 0.781),rgb(255, 255, 255) 45%,rgba(248, 247, 247, 0.014) 0); display: inline;">Limitations</h3>
+    <p>
+      <b>Representativeness</b> 
+    </p> 
+    <p>   
+      Are Twitter users really representative of the general population? According to Pew Research, 
+      Twitter users are younger, more likely to lean left politically, more highly educated, and have higher incomes than U.S. adults overall. <sup>1</sup>
+    </p> 
+    <p> 
+      Additionally, not everyone has access to the internet, even in developed countries. And perhaps most importantly, 
+      the act of posting to Twitter is a decision that is likely impacted by mood, especially with an issue that is deeply intertwined with emotion such as COVID-19. 
+      This could further skew the results of our analysis if users tend to post more tweets when they’re in good moods, for example.
+    </p> 
+     <p> 
+      Despite these limitations, 
+      we believe that gathering data from a sufficiently large sample of users still offers interesting insights that can help answer some of our research questions.
+    </> 
+    <p> 
+      <b>Sample Bias</b> 
+    </p> 
+    <p> 
+    Which tweets are we gathering, exactly?
+    </p>
+    <p>
+      Twitter’s free streaming API returns only a small fraction (1%) of the total tweets on the entire social platform at a given time. 
+      The way that Twitter samples these tweets is also unknown, and there is evidence that these tweets can be biased. <sup>2</sup>
+    </p> 
+    <p> 
+      Despite these limitations, the ease-of-access and sheer volume of social media data provide a useful opportunity to analyze large amounts of data on human behaviour.
+    </p>
+    
+    <h3 style="background-image: linear-gradient(0deg,rgba(248, 201, 29, 0.781),rgb(255, 255, 255) 45%,rgba(248, 247, 247, 0.014) 0); display: inline;">References</h3>
+    <p>  
+    1. Morstatter, F., Pfeffer, J., Liu, H., & Carley, K. M. (2013, June 21). 
+    Is the Sample Good Enough? Comparing Data from Twitter's Streaming API with Twitter's Firehose. ArXiv.org. https://arxiv.org/abs/1306.5204
+    </p>
+    <p>
+    2. Wojcik, S., & Hughes, A. (2020, January 2). How Twitter users compare to the general public. Pew Research Center: Internet,
+     Science & Tech. https://www.pewresearch.org/internet/2019/04/24/sizing-up-twitter-users/
+    </p>
+  </div>
+  
+  <!-- Team -->
+  <div class="w3-container" id="aboutUs" style="margin-top:75px">
+    <h1 class="w3-xxxlarge w3-text-blue"><b>About Us</b></h1>
+    <hr style="width:50px;border:5px solid #f8c91c" class="w3-round">
+  </div>
+
+  <!-- The Team -->
+  <div class="w3-row-padding ">
+    <div class="w3-col m4 w3-margin-bottom">
+      <div class="w3-light-grey">
+        <img src="{% static 'tracker/julian.jpg'%}" alt="Julian" style="width:100%">
+        <div class="w3-container">
+          <h3>Julian Hazell</h3>
+          <p>  Hi there! My name is Julian Hazell, and I’m a writer, editor, and data enthusiast who is interested in all things related to behavioral science,
+               data science, economics, and business. I’m currently working as an associate at The Decision Lab, a non-profit think tank dedicated to democratizing
+               behavioral science through research and analysis. I recently graduated from McGill University with a bachelor’s degree in economics and management.
+               If you want to reach out to chat about any of these topics, feel free to shoot me an email or connect with me on <a style="color:#172e69" href="https://www.linkedin.com/in/julianhazell/" >LinkedIn</a>. 
+               I’m always eager to hear from others who share my interests.
+         </p>
+        </div>
+      </div>
+    </div>
+    <div class="w3-col m4 w3-margin-bottom">
+      <div class="w3-light-grey">
+        <img src="{% static 'tracker/aidan.jpg' %}" alt="Aidan" style="width:100%">
+        <div class="w3-container">
+          <h3>Aidan Weber-Concannon</h3>
+          <p> Hi, my name is Aidan Weber-Concannon. I’m going into my final semester as a computer science student at McGill University. 
+              I’m working this summer as a software engineering intern on the IaaS team at Ormuco, an edge computing company based in Montreal. 
+              I’m interested in web development, cloud computing, and learning new technologies. Reach out to me by email or on <a style="color:#172e69" href="https://www.linkedin.com/in/aidanwc/">LinkedIn</a> if you’d like to chat further.
+          </p>
+          <a class="w3-button"></a>
+        </div>
+      </div>
+    </div>
+   
+  </div>
+
+ 
+  
+  <!-- Contact -->
+  <div class="w3-row-padding" id="contact" style="margin-top:75px">
+    <h1 class="w3-xxxlarge w3-text-blue"><b>Contact</b></h1>
+    <hr style="width:50px;border:5px solid #f8c91c" class="w3-round">
+    <p>Have something in mind that we could add? We're interested in hearing about it. Shoot us an email if you have any thoughts or ideas, or if you'd like to connect with us for any other reason.</p>
+     <p>You can reach us at: <a href="mailto:covidsentimentca@gmail.com">covidsentimentca@gmail.com</a></p>
+    </div>
+
+  </div>
+  
+<!-- End page content -->
+</div>
+
+<!-- W3.CSS Container -->
+<div class="w3-light-grey w3-container w3-padding-32" style="margin-top:75px;padding-right:58px"></div>
+
+
+<script>
+// Script to open and close sidebar
+function w3_open() {
+  document.getElementById("mySidebar").style.display = "block";
+  document.getElementById("myOverlay").style.display = "block";
+}
+ 
+function w3_close() {
+  document.getElementById("mySidebar").style.display = "none";
+  document.getElementById("myOverlay").style.display = "none";
+}
+
+// Modal Image Gallery
+function onClick(element) {
+  document.getElementById("img01").src = element.src;
+  document.getElementById("modal01").style.display = "block";
+  var captionText = document.getElementById("caption");
+  captionText.innerHTML = element.alt;
+}
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.3.0/Chart.min.js"></script>
+<script type="text/javascript" src="https://platform.linkedin.com/badges/js/profile.js" async defer></script>
+
+<script >
      
-      var dates = {{dates|safe}};
-      var sentiment = {{scores|safe}};
-      
-      var positive = {{positive|safe}};
-      var negative = {{negative|safe}};
-      var neutral = {{neutral|safe}};
+  var dates = {{dates|safe}};
+  var sentiment = {{scores|safe}};
+ 
+  var positive = {{positive|safe}};
+  var negative = {{negative|safe}};
+  var neutral = {{neutral|safe}};
 
-      var configLine = {
-        type: 'line',
-        data: {
-          labels: dates ,
-          datasets: [
-            { 
-              data: sentiment,
-              label: "Sentiment",
-              borderColor: "#3e95cd",
-              fill: false
-            },
-          ]
+  var configLine = {
+    type: 'line',
+    data: {
+      labels: dates ,
+      datasets: [
+        { 
+          data: sentiment,
+          label: "Sentiment",
+          borderColor: "#172e69",
+          fill: false
         },
-        options:{
-            scales: {
-                yAxes : [{
-                    ticks : {
-                        max : 1,    
-                        min : -1
-                    }
-                }]
-            }
+      ]
+    },
+    options:{
+        scales: {
+            yAxes : [{
+                ticks : {
+                    max : 1,    
+                    min : -1
+                }
+            }]
         }
-        
+    }
+    
 
-      };
-      
-      var configBar = {
-        type: "bar",
-        data: {
-          labels: dates,
-          datasets: [
-            {
-                label: "Positive",
-                backgroundColor: "#53bd57",
-                fillColor: "#000000",
-                data: positive
-            }, 
-            {
-                label: "Negative",
-                backgroundColor: "#c46060",
-                data: negative
-            },
-            {   
-                label: "Neutral",
-                backgroundColor:"#b1bee3",
-                data: neutral
-            },
-          ]
+  };
+ 
+  var configBar = {
+    type: "bar",
+    data: {
+      labels: dates,
+      datasets: [
+        {
+            label: "Positive",
+            backgroundColor: "rgba(248, 201, 29)",
+            data: positive
+        }, 
+        {
+            label: "Negative",
+            backgroundColor: "#172e69",
+            data: negative
         },
-        options: {
-          legend: {
-           
-          },
-          scales: {
-            xAxes:[{
-              stacked: true
-            }],
-            yAxes:[{
-              stacked: true
-            }],
-          }
-        }
-      };
+        {   
+            label: "Neutral",
+            backgroundColor:"rgb(180, 180, 180)", 
+            data: neutral
+        },
+      ]
+    },
+    options: {
+      legend: {
+       
+      },
+      scales: {
+        xAxes:[{
+          stacked: true
+        }],
+        yAxes:[{
+          stacked: true
+        }],
+      }
+    }
+  };
+ 
+  window.onload = function() {
+    var lineChart= document.getElementById("lineChart");
+    var barChart =document.getElementById("stackedBar")
+    window.myLine = new Chart(lineChart, configLine);
+    window.mybar = new Chart(barChart, configBar);
+};
+</script>
 
-      window.onload = function() {
-        var lineChart= document.getElementById("lineChart");
-        var barChart =document.getElementById("stackedBar")
-        window.myLine = new Chart(lineChart, configLine);
-        window.mybar = new Chart(barChart, configBar);
-    };
-    </script>
-  </body>
+
+</body>
 </html>
