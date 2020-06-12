@@ -23,3 +23,6 @@ def index(request):
     context['negative']=negative
     context['neutral']=neutral
     return render(request,'sentiment/index.html',context)
+
+def verify(request):
+    return render(request,'sentiment/BingSiteAuth.xml',{})
