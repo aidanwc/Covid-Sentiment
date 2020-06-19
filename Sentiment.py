@@ -97,7 +97,15 @@ def sentiment_script():
 
                 samplemean= scoreSum/max(1,counter)
                 samplemean=round(samplemean,3)
-                
+
+                totaltweets = posSum+negSum+neutSum
+
+                #In case scheduler fails
+                if totaltweets < 48000:
+                        posSum = (posSum/totaltweets) * 48000
+                        neutSum = (neutSum/totaltweets) * 48000
+                        negSum = (negSum/totaltweets) * 48000
+
                 print("Number of hourly scores:{} SumScores:{} Sample Mean:{} \n positiveTweets:{} negativeTweets:{} neutral tweets: {}".
                       format(counter,scoreSum,samplemean,posSum,negSum,neutSum))
                 
