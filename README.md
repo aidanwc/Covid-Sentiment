@@ -1,5 +1,5 @@
 # Covid-Sentiment
 
 A Covid sentiment tracker that analyzes
-2000 tweets everyday at 1pm using Twitter's API and 
-NLP to analyze the sentiment towards Covid in the world.
+48,000 tweets everyday using Twitter's API and uses
+NLP to analyze the sentiment towards the virus based off of tweets.
