@@ -100,7 +100,7 @@ def calculate_top_10_words(word_list):
         #List of words to exclude from word counter 
         exclude_list = ['covid','don t','didn t','covid19',
                        'coronavirus','your','please','haven t',
-                       'read','don','thank','thanks','won t']
+                       'read','don','thank','thanks','won t', 'doesn t']
         
         hours_sentences = []
         hours_words = []
@@ -161,6 +161,7 @@ def calculate_daily_score():
         daily_score=DailyScore(score=samplemean, positiveCount=posSum, negativeCount=negSum, neutralCount=neutSum,date=datetime.date.today())
         daily_score.save()
 
+#Cleans up database by deleting previous days word data 
 def clean_up():
         words = Word.objects.order_by('-dateTime')[:10]
         Word.objects.exclude(pk__in=list(words)).delete()
