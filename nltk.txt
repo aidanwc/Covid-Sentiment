@@ -1,1 +1,1 @@
-textblob.download_corpora
+brown
