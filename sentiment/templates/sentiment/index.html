@@ -67,6 +67,10 @@ li{color: rgb(48, 48, 48);}
       <h2 style="color: #172e69; ">Breakdown of Tweets</h2>
       <h4>A breakdown of the tweets that make up the daily score</h4>
       <canvas id="stackedBar"  style="width:100%" ></canvas>
+      <br><br><br>
+      <h2 style="color: #172e69; ">Most Mentioned Words This Hour</h2>
+      <h4>The most popular nouns/phrases of the hour and their frequency</h4>
+      <ul id="top10" class="w3-ul"></ul>
     </div>
   </div>
   
@@ -238,6 +242,8 @@ function onClick(element) {
   var negative = {{negative|safe}};
   var neutral = {{neutral|safe}};
 
+  var topWords = {{top_10_words|safe}}
+
   var configLine = {
     type: 'line',
     data: {
@@ -304,9 +310,16 @@ function onClick(element) {
  
   window.onload = function() {
     var lineChart= document.getElementById("lineChart");
-    var barChart =document.getElementById("stackedBar")
+    var barChart =document.getElementById("stackedBar");
+    var top10 = document.getElementById("top10")
     window.myLine = new Chart(lineChart, configLine);
     window.mybar = new Chart(barChart, configBar);
+    
+    topWords.forEach((word_pair) => {
+      var li = document.createElement("li");
+      li.appendChild(document.createTextNode(word_pair[0]+': '+word_pair[1]));
+      top10.append(li);
+    });
 };
 </script>
 

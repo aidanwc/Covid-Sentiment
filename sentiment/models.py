@@ -22,6 +22,15 @@ class Tweet(models.Model):
     def __str__(self):
         return 'Username: ' + self.username
 
+class Word(models.Model):
+    date = models.DateField()
+    dateTime=models.DateTimeField(auto_now=True)
+    word = models.TextField()
+    count = models.IntegerField(default=0)
+    
+    def __str__(self):
+        return str(self.word) + ' (' +str(self.count) +') ' + str(self.date)
+
 class HourlyScore(models.Model):
     date=models.DateField()
     dateTime=models.DateTimeField(auto_now=True)
