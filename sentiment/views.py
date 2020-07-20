@@ -11,7 +11,6 @@ def index(request):
     top_10_words =[]
     data= DailyScore.objects.order_by('date')
     words = Word.objects.order_by('-dateTime')[:10]
-    print(words)
    
     for item in data:
         scores.append(item.score)
