@@ -12,6 +12,7 @@ import datetime
 import collections
 import ast
 import nltk
+from ExclusionList import exclude_list
 
 #Setting environment variables
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'tracker.settings')
@@ -62,17 +63,17 @@ def sentiment_script():
                         polarityScore = "Positive"
                 elif (textVader['compound'] <= -0.05):
                         polarityScore = "Negative"
-                
-                #Gather nouns in tweets 
+
+                #Gather nouns in tweets
                 blob = TextBlob(text)
                 nouns = (str(blob.noun_phrases))
                 word_list.append(nouns)
-                
+
                 #Creating the dataframe and appending it
                 d = {'Tweet':[text], 'Username':[screen_name], 'Polarity':[textVader['compound']], 'Sentiment':[polarityScore]}
                 df = pd.DataFrame(data=d)
                 final = final.append(df)
-        
+
         #gather most popular words and save them to database
         calculate_top_10_words(word_list)
 
@@ -83,13 +84,13 @@ def sentiment_script():
         numberPositive = str(final.Sentiment.str.count("Positive").sum())
         numberNegative = str(final.Sentiment.str.count("Negative").sum())
         numberNeutral = str(final.Sentiment.str.count("Neutral").sum())
-        
+
         #Gets an hourly score for the 2,000 tweets that is aggregated at the end of the day
         hourly_score = HourlyScore(score=hourly_mean, positiveCount=numberPositive, negativeCount=numberNegative, neutralCount=numberNeutral,date=datetime.date.today())
         hourly_score.save()
 
         now = datetime.datetime.now()
-        
+
         #Aggregates the hourly scores at 11:00pm UTC
         if(now.hour == 23):
                 calculate_daily_score()
@@ -97,21 +98,18 @@ def sentiment_script():
 
 
 def calculate_top_10_words(word_list):
-        #List of words to exclude from word counter 
-        exclude_list = ['covid','don t','didn t','covid19',
-                       'coronavirus','your','please','haven t',
-                       'read','don','thank','thanks','won t', 'doesn t',
-                       'wasn t']
-        
+        #List of words to exclude from word counter
+
+
         hours_sentences = []
         hours_words = []
-        
-        #convert our word list to a better format 
+
+        #convert word list to a better format
         for sent in word_list:
                 parsed_list = ast.literal_eval(sent)
                 hours_sentences.append(parsed_list)
-        
-        #flatten the list in to a list of strings         
+
+        #flatten the list in to a list of strings
         for sentence_list in hours_sentences:
                 for word in sentence_list:
                         if(word not in exclude_list):
@@ -120,7 +118,7 @@ def calculate_top_10_words(word_list):
         #collect 10 most popular words
         counter = collections.Counter(hours_words)
         top_10_words = counter.most_common(10)
-        
+
         for word_pair in top_10_words:
                 try:
                         word = Word(word=word_pair[0], count=word_pair[1], date=datetime.date.today())
@@ -136,7 +134,7 @@ def calculate_daily_score():
         posSum=0
         negSum=0
         neutSum=0
-                
+
         #Sums up the scores and divides by the number of hours
         for score in allScores:
                 counter+=1
@@ -150,7 +148,7 @@ def calculate_daily_score():
 
         totaltweets = posSum+negSum+neutSum
 
-        #In case scheduler fails
+        #In case scheduler fails, averages out the scores we have collected
         if totaltweets < 48000:
                 posSum = (posSum/totaltweets) * 48000
                 neutSum = (neutSum/totaltweets) * 48000
@@ -158,15 +156,15 @@ def calculate_daily_score():
 
         print("Number of hourly scores:{} SumScores:{} Sample Mean:{} \n positiveTweets:{} negativeTweets:{} neutral tweets: {}".
                 format(counter,scoreSum,samplemean,posSum,negSum,neutSum))
-                
+
         daily_score=DailyScore(score=samplemean, positiveCount=posSum, negativeCount=negSum, neutralCount=neutSum,date=datetime.date.today())
         daily_score.save()
 
-#Cleans up database by deleting previous days word data 
+#Cleans up database by deleting previous days word data
 def clean_up():
         words = Word.objects.order_by('-dateTime')[:10].values_list("id", flat=True)
         Word.objects.exclude(pk__in=list(words)).delete()
         print('Clean up completed.')
-               
-#Runs the script 
+
+#Runs the script
 sentiment_script()

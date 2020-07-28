@@ -3,11 +3,12 @@
 <head>
   {% load static %}
 <link rel="icon" type="image/png" href="{% static 'tracker/icon.png'%}"/>
-<title>Covid Sentiment Tracker - How is Twitter feeling about COVID-19?</title>
+<title>Covid Sentiment Tracker - How does Twitter feel about COVID-19?</title>
 <meta charset="UTF-8">
 <meta name="description" content="Covidsentiment.ca tracks how people are feeling about COVID-19 on Twitter by scraping nearly 50,000 tweets every single day using a custom-built Python program.">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta property="og:image" content="{% static 'tracker/icon.png'%}">
+<meta property="og:description" content="Covidsentiment.ca tracks how people are feeling about COVID-19 on Twitter by scraping nearly 50,000 tweets every single day using a custom-built Python program.">
+<meta property="og:image" content="http://www.covidsentiment.ca/static/tracker/preview.png" />
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins">
 <style>
@@ -34,8 +35,8 @@ li{color: rgb(48, 48, 48);}
   </div>
   <div class="w3-bar-block">
     <a href="#tracker" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Tracker<font color="#f8c91c" size="5" style="font-family:Montserrat">.</font></a> 
-    <a href="#about" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">About This Project<font color="#f8c91c" size="5" style="font-family:Montserrat">.</font></a> 
-    <a href="#aboutUs" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">About Us<font color="#f8c91c" size="5" style="font-family:Montserrat">.</font></a> 
+    <a href="#about" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">About this project<font color="#f8c91c" size="5" style="font-family:Montserrat">.</font></a> 
+    <a href="#aboutUs" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">About us<font color="#f8c91c" size="5" style="font-family:Montserrat">.</font></a> 
     <a href="#contact" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Contact<font color="#f8c91c" size="5" style="font-family:Montserrat">.</font></a>
   </div>
 </nav>
@@ -61,16 +62,16 @@ li{color: rgb(48, 48, 48);}
   <!-- Photo grid (modal) -->
   <div class="w3-row-padding">
     <div>
-      <h2 style="color: #172e69;  ">Daily Sentiment Score</h2>
+      <h2 style="color: #172e69;  ">Daily sentiment score</h2>
       <h4>A sentiment score based on a daily analysis of 48,000 tweets</h4>
       <canvas id="lineChart"style="width:100%"></canvas>
       <br><br><br>
-      <h2 style="color: #172e69; ">Breakdown of Tweets</h2>
-      <h4>A breakdown of the tweets that make up the daily score</h4>
+      <h2 style="color: #172e69; ">Tweet breakdown</h2>
+      <h4>A breakdown of the tweets that compose the daily score</h4>
       <canvas id="stackedBar"  style="width:100%" ></canvas>
       <br><br><br>
-      <h2 style="color: #172e69; ">Most Mentioned Words This Hour</h2>
-      <h4>The most popular nouns/phrases of the hour and their frequency</h4>
+      <h2 style="color: #172e69; ">What else is on Twitter's mind?</h2>
+      <h4>The top 10 most popular phrases in the past hour from the Tweets we've gathered</h4>
       <ul id="top10" class="w3-ul"></ul>
     </div>
   </div>
@@ -87,28 +88,28 @@ li{color: rgb(48, 48, 48);}
 
   <!-- Services -->
   <div class="w3-container" id="about" style="margin-top:75px">
-    <h1 class="w3-xxxlarge w3-text-blue"><b>About This Project</b></h1>
+    <h1 class="w3-xxxlarge w3-text-blue"><b>About this project</b></h1>
     
-    <h2 style="background-image: linear-gradient(0deg,rgba(248, 201, 29, 0.781),rgb(255, 255, 255) 45%,rgba(248, 247, 247, 0.014) 0); display: inline;">Why We Made This</h3>
+    <h2 style="background-image: linear-gradient(0deg,rgba(248, 201, 29, 0.781),rgb(255, 255, 255) 45%,rgba(248, 247, 247, 0.014) 0); display: inline;">Why we made this</h3>
     <p>Hi there,</p>
     <p>
-        We are Julian and Aidan. Like many others in the past few months, we had a lot of questions about COVID-19 and some free time to try and answer them. More specifically, 
+        Our names are Julian and Aidan. Like many others in the past few months, we've had a lot of questions about COVID-19 and some free time to try and answer them. More specifically, 
         we wanted to analyze tweets that mention COVID-19 to learn how humans behave during a situation as atypical as a pandemic.
     </p>
     <p>
         So, we built Covidsentiment.ca to do just that.
     </p>
 
-    <h2 style="background-image: linear-gradient(0deg,rgba(248, 201, 29, 0.781),rgb(255, 255, 255) 45%,rgba(248, 247, 247, 0.014) 0); display: inline;">How It Works</h3>
+    <h2 style="background-image: linear-gradient(0deg,rgba(248, 201, 29, 0.781),rgb(255, 255, 255) 45%,rgba(248, 247, 247, 0.014) 0); display: inline;">How it works</h3>
     <p> Our program uses Twitter data to try and estimate how people are feeling about the virus.</p>
     <p>  
-      To do so, we gather nearly 50,000 tweets that mention COVID-19 every day, and perform <a style="color:#172e69" href="https://monkeylearn.com/sentiment-analysis/">sentiment analysis</a> — which is a subfield of <a style="color:#172e69" href="https://towardsdatascience.com/your-guide-to-natural-language-processing-nlp-48ea2511f6e1">natural language processing</a>, 
+      To do so, we gather nearly 50,000 tweets mentioning COVID-19 every day, and perform <a style="color:#172e69" href="https://monkeylearn.com/sentiment-analysis/">sentiment analysis</a> — which is a subfield of <a style="color:#172e69" href="https://towardsdatascience.com/your-guide-to-natural-language-processing-nlp-48ea2511f6e1">natural language processing</a>, 
       or ‘NLP’ — on them to determine to which degree each tweet is positive, negative, or neutral. 
       
       The result is a score that ranges from -1.0 (negative sentiment) to 1.0 (positive sentiment),
       which we calculate by averaging all of the scores from the tweets that we scrape on a given day.
      
-      <p> Then, our program takes that number and plots it on a time series graph so we can easily
+      <p> Then, our program takes that number and plots it on a time series graph so we can 
       see how the average sentiment is changing over time.
     </p> 
     <p> 
@@ -116,12 +117,12 @@ li{color: rgb(48, 48, 48);}
       and then track how the average mood of all the tweets changes over time.
     </p>
 
-    <h2 style="background-image: linear-gradient(0deg,rgba(248, 201, 29, 0.781),rgb(255, 255, 255) 45%,rgba(248, 247, 247, 0.014) 0); display: inline;">Research Questions</h3>
+    <h2 style="background-image: linear-gradient(0deg,rgba(248, 201, 29, 0.781),rgb(255, 255, 255) 45%,rgba(248, 247, 247, 0.014) 0); display: inline;">Research questions</h3>
     <p>1. What insights can we learn about the state of the pandemic by estimating what people’s moods are?</p>
     <p>2. How will the average mood towards COVID-19 change over time? What are the implications of that change?</p>
     <p>3. What important information can we learn from analyzing extremely negative tweets? What about extremely positive tweets?</p>
     <p>4. Are mood improvements permanent? Are they cyclical?</p>
-    <p>5. What can we predict in the real-world from aggregate mood changes?</p>
+    <p>5. What related phrases are frequently mentioned in the Tweets we scrape?</p>
   </ul>
     <h2 style="background-image: linear-gradient(0deg,rgba(248, 201, 29, 0.781),rgb(255, 255, 255) 45%,rgba(248, 247, 247, 0.014) 0); display: inline;">Limitations</h3>
       <p>As with any study, there are limitations. Two issues that may limit our ability to answer our research questions are representativeness and sample bias, which we discuss below.</p>
@@ -139,24 +140,24 @@ li{color: rgb(48, 48, 48);}
     <p>
       This could further skew the results of our analysis if users tend to post more tweets when they’re in good moods, for example.
     </p> 
-    <p style="font-size:20px"><strong>Sample Bias</strong> 
+    <p style="font-size:20px"><strong>Sample bias</strong> 
     </p> 
     <p> 
     Which tweets are we gathering, exactly?
     </p>
     <p>
-      Twitter’s free streaming API returns only a small fraction (1%) of the total tweets on the entire social platform at a given time. 
+      Twitter’s free streaming API returns only a small fraction (1%) of the total tweets on the entire Twitter platform at a given time. 
       The way that Twitter samples these tweets is also unknown, and <a style="color:#172e69" href="https://arxiv.org/abs/1306.5204">there is evidence</a> that these tweets can be biased.
     </p> 
     <p> 
-      Despite these limitations, the ease-of-access and sheer volume of social media data provide a useful opportunity to analyze large amounts of data on human behaviour.
+      Despite these limitations, the ease-of-access and sheer volume of social media data both provide a useful opportunity to analyze large amounts of data on human behaviour.
     </p>
     
   </div>
   
   <!-- Team -->
   <div class="w3-container" id="aboutUs" style="margin-top:75px">
-    <h1 class="w3-xxxlarge w3-text-blue"><b>About Us</b></h1>
+    <h1 class="w3-xxxlarge w3-text-blue"><b>About us</b></h1>
     <hr style="width:50px;border:5px solid #f8c91c" class="w3-round">
   </div>
 
