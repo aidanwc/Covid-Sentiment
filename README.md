@@ -1,7 +1,5 @@
-# Covid-Sentiment
+# Covid Sentiment Tracker
 
-A Covid sentiment tracker that analyzes
-48,000 tweets everyday using Twitter's API and uses
-NLP to analyze the sentiment towards the virus based off of tweets.
+Covidsentiment.ca tracks how people are feeling about COVID-19 on Twitter by scraping nearly 50,000 tweets every single day. It uses NLP to analyze the tweets and assign a daily sentiment score. In addition, it tracks other metrics such as tweet breakdowns and the most mentioned phrases on Twitter of the hour.
 
 You can view the results [here](http://www.covidsentiment.ca)
