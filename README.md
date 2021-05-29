@@ -4,4 +4,4 @@ Covidsentiment.ca tracks how people are feeling about COVID-19 on Twitter by scr
 
 The tracker was coded in Python using the Django framework and uses a PostgreSQL database and Chart.js to store and display the metrics. 
 
-You can view the results [here](http://www.covidsentiment.ca)
+You can view the results [here](http://covid-sentiment.herokuapp.com/)
